@@ -29,13 +29,13 @@ workspace state, add or update a transcript under
 `Tests/OmniWMTests/Transcripts/Goldens/`. The `make transcripts` and
 `make verify` targets run the transcript suite plus
 `Scripts/check-transcript-coverage.sh`, which fails the build if a Phase
-05 transcript slice loses its golden file. See
-`docs/RELIABILITY-MIGRATION.md` for the full slice list.
+05 transcript slice loses its golden transcript or replay test file.
 
-## Tracking Documents
+## Release Gates
 
-- `docs/RELIABILITY-MIGRATION.md` — direct-mutation rows, typed
-  Command/Effect runtime migration status. Update the row in the same
-  commit that advances it.
-- `docs/ABI-INVENTORY.md` — stable kernel ABI surfaces. Update when
-  touching `Sources/COmniWMKernels/` or `Zig/omniwm_kernels/src/`.
+- `Scripts/check-direct-mutation-callers.sh` blocks new direct-mutation
+  paths unless they route through the runtime or carry an allowlist
+  rationale in the script.
+- `Scripts/check-kernel-abi-goldens.sh` verifies stable kernel ABI
+  surfaces. Regenerate and verify goldens when touching
+  `Sources/COmniWMKernels/` or `Zig/omniwm_kernels/src/`.

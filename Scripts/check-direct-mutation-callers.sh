@@ -533,7 +533,7 @@ for pattern in "${PATTERNS[@]}"; do
 
         if (( violations == 0 )); then
             echo "Phase 01 closing-slice enforcement: direct-mutation policy violation."
-            echo "New callers must route through WMRuntime; see docs/RELIABILITY-MIGRATION.md."
+            echo "New callers must route through WMRuntime or carry an allowlist rationale in this script."
             echo
         fi
         echo "Pattern: $pattern"
@@ -560,7 +560,7 @@ for rule in "${OWNER_SURFACE_RULES[@]}"; do
 
     if (( violations == 0 )); then
         echo "Phase 01 closing-slice enforcement: direct-mutation policy violation."
-        echo "New callers must route through WMRuntime; see docs/RELIABILITY-MIGRATION.md."
+        echo "New callers must route through WMRuntime or carry an allowlist rationale in this script."
         echo
     fi
     echo "Stale owner-surface rule: $path"
@@ -683,7 +683,7 @@ for file in "${LAYOUT_CONSUMER_FILES[@]}"; do
             echo "Phase 03 Slice CL-06 enforcement: layout consumer reads WGT-10 compatibility accessor."
             echo "Production layout-snapshot construction must read membership/order through"
             echo "WorkspaceGraph + MonitorTopologyState, not WorkspaceManager.{entries,tiledEntries,"
-            echo "floatingEntries,monitorForWorkspace}. See docs/RELIABILITY-MIGRATION.md WGT-10."
+            echo "floatingEntries,monitorForWorkspace}. Carry any compatibility exception in this script."
             echo
         fi
         echo "Pattern: $pattern"

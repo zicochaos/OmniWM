@@ -262,7 +262,12 @@ final class WMRuntime: RuntimeSnapshotPublishing {
                 let durationMicros = Self.elapsedMicros(since: startTime)
                 intakeSignpost.endInterval("submit_event", signpostState)
                 intakeLog.debug(
-                    "event_rejected_scoped_focus kind=\(event.kindForLog, privacy: .public) reason=\(rejectionReason, privacy: .public) source=\(event.source.rawValue, privacy: .public) txn=\(epoch.value) origin_txn=\(originating.value) us=\(durationMicros)"
+                    """
+                    event_rejected_scoped_focus kind=\(event.kindForLog, privacy: .public) \
+                    reason=\(rejectionReason, privacy: .public) \
+                    source=\(event.source.rawValue, privacy: .public) txn=\(epoch.value) \
+                    origin_txn=\(originating.value) us=\(durationMicros)
+                    """
                 )
                 return rejected
             }

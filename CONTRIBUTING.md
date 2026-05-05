@@ -46,12 +46,12 @@ Bug fixes, documentation improvements, performance work, focused cleanups, featu
 6. Run `make kernels-test` when your change touches the kernel library.
 7. Open a pull request with clear context, reasoning, and the commands you ran.
 
-## Tracking Documents
+## Release Gates
 
-Two living documents capture migration and ABI state:
+The release checks capture migration and ABI invariants:
 
-- [`docs/RELIABILITY-MIGRATION.md`](docs/RELIABILITY-MIGRATION.md) tracks every direct-mutation row, the typed Command/Effect runtime migration, and per-row status (`verified` / `legacy-sealed` / `deferred-with-rationale`). If your change touches a tracked row, update that row in the same commit. New direct-mutation paths must either route through the runtime or land with an allowlist entry plus rationale in `Scripts/check-direct-mutation-callers.sh`.
-- [`docs/ABI-INVENTORY.md`](docs/ABI-INVENTORY.md) is the canonical inventory of stable kernel ABI surfaces. If your change touches `Sources/COmniWMKernels/`, `Zig/omniwm_kernels/src/`, or any C-ABI-exposed kernel struct, update the inventory and regenerate goldens (`make kernels-test`; `Scripts/check-kernel-abi-goldens.sh` must pass).
+- `Scripts/check-direct-mutation-callers.sh` blocks new direct-mutation paths. New callers must route through the runtime or land with an allowlist entry and rationale in the script.
+- `Scripts/check-kernel-abi-goldens.sh` verifies stable kernel ABI surfaces. If your change touches `Sources/COmniWMKernels/`, `Zig/omniwm_kernels/src/`, or any C-ABI-exposed kernel struct, regenerate and verify the goldens (`make kernels-test`; `Scripts/check-kernel-abi-goldens.sh` must pass).
 
 ## Questions and Ideas
 

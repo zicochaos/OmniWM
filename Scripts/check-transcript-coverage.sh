@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Phase 05 (VWS-14) gate. Asserts that every Phase 05 transcript named
-# in the rewrite plan has a corresponding golden test file under
-# `Tests/OmniWMTests/Transcripts/Goldens/` and that the
-# `RELIABILITY-MIGRATION.md` Phase 05 table mentions each transcript by
-# slice ID.
+# Phase 05 (VWS-14) gate. Asserts that every required Phase 05
+# transcript has a corresponding golden transcript and replay test file
+# under `Tests/OmniWMTests/Transcripts/Goldens/`.
 #
 # This is the structural counterpart to `check-direct-mutation-callers.sh`
 # — it polices a process invariant rather than a code invariant.
@@ -16,7 +14,6 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 GOLDENS_DIR="Tests/OmniWMTests/Transcripts/Goldens"
-MIGRATION_DOC="docs/RELIABILITY-MIGRATION.md"
 
 # Map slice ID → expected golden file name. The list is intentionally
 # explicit so a future transcript addition has to update this script
@@ -58,10 +55,6 @@ for entry in "${EXPECTED_TRANSCRIPTS[@]}"; do
         errors=$((errors + 1))
     fi
 
-    if ! grep -q "$slice_id" "$MIGRATION_DOC" 2>/dev/null; then
-        echo "ERROR: $slice_id missing from $MIGRATION_DOC"
-        errors=$((errors + 1))
-    fi
 done
 
 if [[ $errors -gt 0 ]]; then
